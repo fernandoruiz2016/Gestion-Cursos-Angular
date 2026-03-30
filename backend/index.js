@@ -4,11 +4,8 @@ require("dotenv").config({quiet:true});
 
 const crearTablas = require("./database/crearTablas");
 
-const pacientesApi = require("./apis/pacientes");
-const medicosApi = require("./apis/medicos");
-const citasApi = require("./apis/citas");
-const pagosApi = require("./apis/pagos");
-const dashboardRoutes = require("./apis/dashboard");
+const usuariosApi = require("./apis/usuarios");
+const cursosApi = require("./apis/cursos");
 const authApi = require("./apis/auth");
 
 
@@ -17,12 +14,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use("/pacientes", pacientesApi);
-app.use("/medicos", medicosApi);
-app.use("/citas", citasApi);
-app.use("/pagos", pagosApi);
-app.use("/dashboard", dashboardRoutes);
-app.use("/auth", authApi);
+app.use("/api/usuarios", usuariosApi);
+app.use("/api/cursos", cursosApi);
+app.use("/api/auth", authApi);
 
 const port = process.env.SERVER_PORT;
 

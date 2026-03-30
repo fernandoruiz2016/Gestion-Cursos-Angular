@@ -1,42 +1,57 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-const { findByUsuario, crearUsuario, obtenerUsuarios, eliminarUsuario } = require("./auth.repository");
+const { findByEmail, crearUsuario, obtenerUsuarios, eliminarUsuario } = require("./auth.repository");
 
-async function login(usuario, clave) {
+async function login(email, clave) {
   try {
-    const user = await findByUsuario(usuario);
-
+    console.log(`[AuthService] Intentando login para: ${email}`);
+    const user = await findByEmail(email);
+ 
     if (!user) {
+      console.warn(`[AuthService] Usuario no encontrado: ${email}`);
       throw new Error("Usuario no encontrado");
     }
-
+ 
+    console.log(`[AuthService] Usuario encontrado: ${user.email}. Comparando clave...`);
     const isMatch = await bcrypt.compare(
       String(clave).trim(),
       user.clave.trim(),
     );
-
+ 
     if (!isMatch) {
+       console.warn(`[AuthService] Contraseña INCORRECTA para: ${email}`);
       throw new Error("Credenciales inválidas");
     }
+ 
+    console.log(`[AuthService] Login EXITOSO para: ${email}`);
 
     const token = jwt.sign(
-      { id: user.id, usuario: user.usuario },
+      { id: user.id, nombre: user.nombre, rol: user.rol, email: user.email },
       process.env.CLAVE_TOKEN || "IDAT_SECRET_2026",
       { expiresIn: "8h" },
     );
 
-    return { token };
+    return { 
+      token, 
+      user: {
+        id: user.id,
+        nombre: user.nombre,
+        apellido: user.apellido,
+        rol: user.rol,
+        email: user.email
+      }
+    };
   } catch (error) {
     console.error("Error dentro de auth.service:", error.message);
     throw error;
   }
 }
 
-async function registrar(usuario, claveOriginal) {
+async function registrar(nombre, apellido, email, claveOriginal, rol) {
   const rounds = 10;
   const claveHash = await bcrypt.hash(claveOriginal, rounds);
 
-  return await crearUsuario(usuario, claveHash);
+  return await crearUsuario(nombre, apellido, email, claveHash, rol);
 }
 
 async function listarUsuarios(filtros) {

@@ -1,34 +1,37 @@
 const db = require("../../database/conexion");
 
-async function findByUsuario(usuario) {
-  const query = "SELECT * FROM Usuario WHERE Usuario = $1";
-  const res = await db.query(query, [usuario]);
+async function findByEmail(email) {
+  const query = "SELECT * FROM Usuario WHERE Email ILIKE $1";
+  const res = await db.query(query, [email]);
 
   if (res.rows.length > 0) {
     const u = res.rows[0];
     return {
       id: u.id_usuario,
-      usuario: u.usuario,
+      nombre: u.nombre,
+      apellido: u.apellido,
+      email: u.email,
       clave: u.clave,
+      rol: u.rol,
     };
   }
   return null;
 }
 
-async function crearUsuario(usuario, claveEncriptada, rol = "Admin") {
+async function crearUsuario(nombre, apellido, email, claveEncriptada, rol = 'ESTUDIANTE') {
   const query =
-    "INSERT INTO Usuario (Usuario, Clave, Rol) VALUES ($1, $2, $3) RETURNING id_usuario";
-  const res = await db.query(query, [usuario, claveEncriptada, rol]);
+    "INSERT INTO Usuario (Nombre, Apellido, Email, Clave, Rol) VALUES ($1, $2, $3, $4, $5) RETURNING id_usuario";
+  const res = await db.query(query, [nombre, apellido, email, claveEncriptada, rol]);
   return res.rows[0];
 }
 
 async function obtenerUsuarios(filtros) {
-  let query = "SELECT id_usuario, usuario, rol FROM Usuario WHERE 1=1";
+  let query = "SELECT id_usuario, nombre, apellido, email, rol FROM Usuario WHERE 1=1";
   const params = [];
 
-  if (filtros.usuario) {
-    params.push(`%${filtros.usuario}%`);
-    query += ` AND usuario Ilike $${params.length}`;
+  if (filtros.nombre) {
+    params.push(`%${filtros.nombre}%`);
+    query += ` AND (nombre Ilike $${params.length} OR apellido Ilike $${params.length})`;
   }
 
   if (filtros.rol) {
@@ -43,12 +46,12 @@ async function obtenerUsuarios(filtros) {
 
 async function eliminarUsuario(id) {
   const query =
-    "DELETE FROM Usuario WHERE id_usuario = $1 AND usuario != 'admin'";
+    "DELETE FROM Usuario WHERE id_usuario = $1 AND email != 'admin@idat.edu.pe'";
   return await db.query(query, [id]);
 }
 
 module.exports = {
-  findByUsuario: findByUsuario,
+  findByEmail: findByEmail,
   crearUsuario: crearUsuario,
   obtenerUsuarios: obtenerUsuarios,
   eliminarUsuario: eliminarUsuario,
