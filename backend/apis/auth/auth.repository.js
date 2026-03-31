@@ -7,12 +7,12 @@ async function findByEmail(email) {
   if (res.rows.length > 0) {
     const u = res.rows[0];
     return {
-      id: u.id_usuario,
-      nombre: u.nombre,
-      apellido: u.apellido,
-      email: u.email,
-      clave: u.clave,
-      rol: u.rol,
+      Id_Usuario: u.id_usuario,
+      Nombre: u.nombre,
+      Apellido: u.apellido,
+      Email: u.email,
+      Clave: u.clave,
+      Rol: u.rol,
     };
   }
   return null;
@@ -26,7 +26,7 @@ async function crearUsuario(nombre, apellido, email, claveEncriptada, rol = 'EST
 }
 
 async function obtenerUsuarios(filtros) {
-  let query = "SELECT id_usuario, nombre, apellido, email, rol FROM Usuario WHERE 1=1";
+  let query = "SELECT id_usuario AS \"Id_Usuario\", nombre AS \"Nombre\", apellido AS \"Apellido\", email AS \"Email\", rol AS \"Rol\" FROM Usuario WHERE 1=1";
   const params = [];
 
   if (filtros.nombre) {

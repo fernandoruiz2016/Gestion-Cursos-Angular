@@ -22,22 +22,34 @@ async function getByIdController(req, res) {
 
 async function createController(req, res) {
   try {
-    const { nombre, descripcion, id_profesor } = req.body;
+    const nombre = req.body.Nombre || req.body.nombre;
+    const descripcion = req.body.Descripcion || req.body.descripcion;
+    const id_profesor = req.body.Id_Profesor || req.body.id_profesor;
+
+    if (!nombre) {
+      return res.status(400).json({ message: "El nombre del curso es obligatorio" });
+    }
+
     const nuevoCurso = await crearCurso(nombre, descripcion, id_profesor);
     res.status(201).json(nuevoCurso);
   } catch (error) {
-    res.status(400).json({ message: "Error al crear el curso" });
+    console.error("Error creating course:", error);
+    res.status(400).json({ message: error.message || "Error al crear el curso" });
   }
 }
 
 async function updateController(req, res) {
   try {
     const { id } = req.params;
-    const { nombre, descripcion, id_profesor } = req.body;
+    const nombre = req.body.Nombre || req.body.nombre;
+    const descripcion = req.body.Descripcion || req.body.descripcion;
+    const id_profesor = req.body.Id_Profesor || req.body.id_profesor;
+
     const cursoActualizado = await editarCurso(id, nombre, descripcion, id_profesor);
     res.status(200).json(cursoActualizado);
   } catch (error) {
-    res.status(400).json({ message: "Error al actualizar el curso" });
+    console.error("Error updating course:", error);
+    res.status(400).json({ message: error.message || "Error al actualizar el curso" });
   }
 }
 

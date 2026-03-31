@@ -23,22 +23,37 @@ async function getByIdController(req, res) {
 
 async function createController(req, res) {
   try {
-    const { nombre, apellido, email, clave, rol } = req.body;
+    const nombre = req.body.Nombre || req.body.nombre;
+    const apellido = req.body.Apellido || req.body.apellido;
+    const email = req.body.Email || req.body.email;
+    const clave = req.body.Clave || req.body.clave;
+    const rol = req.body.Rol || req.body.rol;
+    
+    if (!nombre || !email) {
+       return res.status(400).json({ message: "Nombre y Email son obligatorios" });
+    }
+
     const nuevoUsuario = await registrarUsuario(nombre, apellido, email, clave, rol);
-    res.status(201).json({ message: "Usuario creado", userId: nuevoUsuario.id_usuario });
+    res.status(201).json({ message: "Usuario creado", userId: nuevoUsuario.Id_Usuario || nuevoUsuario.id_usuario });
   } catch (error) {
-    res.status(400).json({ message: "Error al crear el usuario" });
+    console.error("Error creating user:", error);
+    res.status(400).json({ message: error.message || "Error al crear el usuario" });
   }
 }
 
 async function updateController(req, res) {
   try {
     const { id } = req.params;
-    const { nombre, apellido, email, rol } = req.body;
+    const nombre = req.body.Nombre || req.body.nombre;
+    const apellido = req.body.Apellido || req.body.apellido;
+    const email = req.body.Email || req.body.email;
+    const rol = req.body.Rol || req.body.rol;
+
     const usuarioActualizado = await editarUsuario(id, nombre, apellido, email, rol);
     res.status(200).json(usuarioActualizado);
   } catch (error) {
-    res.status(400).json({ message: "Error al actualizar el usuario" });
+    console.error("Error updating user:", error);
+    res.status(400).json({ message: error.message || "Error al actualizar el usuario" });
   }
 }
 

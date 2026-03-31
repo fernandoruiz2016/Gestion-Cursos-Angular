@@ -2,7 +2,13 @@ const db = require("../../database/conexion");
 
 async function obtenerTodos() {
   const query = `
-    SELECT c.*, u.Nombre as nombre_profesor, u.Apellido as apellido_profesor 
+    SELECT 
+      c.Id_Curso AS "Id_Curso", 
+      c.Nombre AS "Nombre", 
+      c.Descripcion AS "Descripcion", 
+      c.Id_Profesor AS "Id_Profesor",
+      u.Nombre as nombre_profesor, 
+      u.Apellido as apellido_profesor 
     FROM Curso c 
     LEFT JOIN Usuario u ON c.Id_Profesor = u.Id_Usuario
   `;
@@ -11,19 +17,19 @@ async function obtenerTodos() {
 }
 
 async function obtenerPorId(id) {
-  const query = "SELECT * FROM Curso WHERE Id_Curso = $1";
+  const query = "SELECT Id_Curso AS \"Id_Curso\", Nombre AS \"Nombre\", Descripcion AS \"Descripcion\", Id_Profesor AS \"Id_Profesor\" FROM Curso WHERE Id_Curso = $1";
   const res = await db.query(query, [id]);
   return res.rows[0];
 }
 
 async function crear(nombre, descripcion, id_profesor) {
-  const query = "INSERT INTO Curso (Nombre, Descripcion, Id_Profesor) VALUES ($1, $2, $3) RETURNING *";
+  const query = "INSERT INTO Curso (Nombre, Descripcion, Id_Profesor) VALUES ($1, $2, $3) RETURNING Id_Curso AS \"Id_Curso\", Nombre AS \"Nombre\", Descripcion AS \"Descripcion\", Id_Profesor AS \"Id_Profesor\"";
   const res = await db.query(query, [nombre, descripcion, id_profesor]);
   return res.rows[0];
 }
 
 async function actualizar(id, nombre, descripcion, id_profesor) {
-  const query = "UPDATE Curso SET Nombre = $1, Descripcion = $2, Id_Profesor = $3 WHERE Id_Curso = $4 RETURNING *";
+  const query = "UPDATE Curso SET Nombre = $1, Descripcion = $2, Id_Profesor = $3 WHERE Id_Curso = $4 RETURNING Id_Curso AS \"Id_Curso\", Nombre AS \"Nombre\", Descripcion AS \"Descripcion\", Id_Profesor AS \"Id_Profesor\"";
   const res = await db.query(query, [nombre, descripcion, id_profesor, id]);
   return res.rows[0];
 }

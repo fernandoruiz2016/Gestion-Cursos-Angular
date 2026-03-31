@@ -12,10 +12,11 @@ async function login(email, clave) {
       throw new Error("Usuario no encontrado");
     }
  
-    console.log(`[AuthService] Usuario encontrado: ${user.email}. Comparando clave...`);
+    console.log(`[AuthService] Usuario encontrado: ${user.Email}. Comparando clave...`);
     const isMatch = await bcrypt.compare(
       String(clave).trim(),
-      user.clave.trim(),
+      user.Clave.trim(),
+
     );
  
     if (!isMatch) {
@@ -26,7 +27,7 @@ async function login(email, clave) {
     console.log(`[AuthService] Login EXITOSO para: ${email}`);
 
     const token = jwt.sign(
-      { id: user.id, nombre: user.nombre, rol: user.rol, email: user.email },
+      { id: user.Id_Usuario, nombre: user.Nombre, rol: user.Rol, email: user.Email },
       process.env.CLAVE_TOKEN || "IDAT_SECRET_2026",
       { expiresIn: "8h" },
     );
@@ -34,11 +35,11 @@ async function login(email, clave) {
     return { 
       token, 
       user: {
-        id: user.id,
-        nombre: user.nombre,
-        apellido: user.apellido,
-        rol: user.rol,
-        email: user.email
+        Id_Usuario: user.Id_Usuario,
+        Nombre: user.Nombre,
+        Apellido: user.Apellido,
+        Rol: user.Rol,
+        Email: user.Email
       }
     };
   } catch (error) {
