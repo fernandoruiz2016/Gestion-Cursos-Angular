@@ -1,0 +1,41 @@
+<div class="dashboard-layout">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h2>Cursos IDAT</h2>
+    </div>
+    <nav class="sidebar-nav">
+      <a routerLink="/dashboard/home" routerLinkActive="active" class="nav-item">
+        <lucide-icon [img]="LayoutIcon" class="nav-icon"></lucide-icon>
+        Resumen
+      </a>
+      <a *appHasRole="roles.ADMIN" routerLink="/dashboard/users" routerLinkActive="active" class="nav-item">
+        <lucide-icon [img]="UsersIcon" class="nav-icon"></lucide-icon>
+        Usuarios
+      </a>
+      <a *appHasRole="[roles.ADMIN, roles.PROFESOR]" routerLink="/dashboard/courses" routerLinkActive="active" class="nav-item">
+        <lucide-icon [img]="BookIcon" class="nav-icon"></lucide-icon>
+        Cursos
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      @if (user) {
+      <div class="user-info">
+        <span class="user-name">{{ user.Nombre }} {{ user.Apellido }}</span>
+        <span class="user-role">{{ user.Rol }}</span>
+      </div>
+      }
+      <button (click)="logout()" class="btn-logout">
+        <lucide-icon [img]="LogoutIcon" class="btn-icon"></lucide-icon>
+        Cerrar Sesión
+      </button>
+    </div>
+  </aside>
+  <main class="content">
+    <header class="top-header">
+      <h1>Panel de Control</h1>
+    </header>
+    <div class="main-body">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+</div>

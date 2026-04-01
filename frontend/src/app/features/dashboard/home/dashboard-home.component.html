@@ -1,0 +1,45 @@
+<div class="home-container animate-fade-in">
+  @if (loading) {
+  <div class="loader-container">
+    <div class="spinner"></div>
+    <p>Cargando información...</p>
+  </div>
+  } @else {
+  <div class="welcome-section">
+    <h1>¡Hola, {{ user?.Nombre }}! 👋</h1>
+    <p>Bienvenido al sistema de gestión de IDAT. Aquí tienes un resumen de la plataforma.</p>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon-wrapper users">
+        <lucide-icon [img]="UsersIcon" class="stat-icon"></lucide-icon>
+      </div>
+      <div class="stat-info">
+        <span class="stat-label">Usuarios Totales</span>
+        <span class="stat-value">{{ userCount }}</span>
+      </div>
+    </div>
+    
+    <div class="stat-card">
+      <div class="stat-icon-wrapper courses">
+        <lucide-icon [img]="BookIcon" class="stat-icon"></lucide-icon>
+      </div>
+      <div class="stat-info">
+        <span class="stat-label">Cursos Activos</span>
+        <span class="stat-value">{{ courseCount }}</span>
+      </div>
+    </div>
+    
+    <div class="stat-card">
+      <div class="stat-icon-wrapper role">
+        <lucide-icon [img]="ShieldIcon" class="stat-icon"></lucide-icon>
+      </div>
+      <div class="stat-info">
+        <span class="stat-label">Tu Rol</span>
+        <span class="stat-value">{{ user?.Rol }}</span>
+      </div>
+    </div>
+  </div>
+  }
+</div>

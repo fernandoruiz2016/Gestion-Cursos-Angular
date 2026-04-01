@@ -1,0 +1,97 @@
+<div class="course-list-container animate-fade-in">
+  <div class="page-header">
+    <div>
+      <h1>Gestión de Cursos</h1>
+      <p>Administre el catálogo de cursos y asigne profesores.</p>
+    </div>
+    <button class="btn-primary" (click)="openCreate()">
+      <lucide-icon [img]="PlusIcon" class="btn-icon-inside"></lucide-icon>
+      Nuevo Curso
+    </button>
+  </div>
+
+  <div class="card table-card">
+    @if (loading) {
+      <div class="loader-container">
+        <div class="spinner"></div>
+        <p>Cargando cursos...</p>
+      </div>
+    } @else {
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Profesor</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (course of courses; track course.Id_Curso) {
+            <tr>
+              <td><span class="font-semi">{{ course.Nombre }}</span></td>
+              <td><span class="text-muted">{{ course.Descripcion || 'Sin descripción' }}</span></td>
+              <td>{{ getProfessorName(course.Id_Profesor) }}</td>
+              <td>
+                <div class="action-buttons">
+                  <button class="btn-icon edit" (click)="openEdit(course)" title="Editar">
+                    <lucide-icon [img]="EditIcon" class="icon-sm"></lucide-icon>
+                  </button>
+                  <button class="btn-icon delete" (click)="deleteCourse(course.Id_Curso)" title="Eliminar">
+                    <lucide-icon [img]="DeleteIcon" class="icon-sm"></lucide-icon>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="4" class="empty-state">No hay cursos registrados.</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    }
+  </div>
+
+  @if (showModal) {
+    <div class="modal-overlay animate-fade-in">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>{{ editingCourse ? 'Editar' : 'Nuevo' }} Curso</h2>
+          <button class="btn-icon close-btn" (click)="closeModal()">
+            <lucide-icon [img]="CloseIcon" class="icon-sm"></lucide-icon>
+          </button>
+        </div>
+        <form [formGroup]="courseForm" (ngSubmit)="saveCourse()">
+          <div class="form-group">
+            <label>Nombre del Curso</label>
+            <input type="text" formControlName="Nombre" class="form-control" placeholder="Ej. JavaScript Básico">
+            @if (courseForm.get('Nombre')?.touched && courseForm.get('Nombre')?.invalid) {
+              <small class="error-text">Requerido</small>
+            }
+          </div>
+          <div class="form-group">
+            <label>Descripción</label>
+            <textarea formControlName="Descripcion" rows="3" class="form-control" placeholder="Acerca del curso..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>Profesor Asignado</label>
+            <select formControlName="Id_Profesor" class="form-control">
+              @for (prof of professors; track prof.Id_Usuario) {
+                <option [value]="prof.Id_Usuario">
+                  {{ prof.Nombre }} {{ prof.Apellido }} ({{ prof.Rol | roleName }})
+                </option>
+              }
+            </select>
+          </div>
+          <div class="modal-actions">
+            <button type="button" class="btn-secondary" (click)="closeModal()">Cancelar</button>
+            <button type="submit" class="btn-primary" [disabled]="courseForm.invalid">Guardar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  }
+</div>
