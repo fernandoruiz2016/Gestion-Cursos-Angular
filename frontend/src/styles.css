@@ -1,5 +1,5 @@
 /* 
-  Global Design System - Dark Mode
+  Global Design System
 */
 
 :root {
@@ -8,20 +8,26 @@
   --brand-hover: rgba(114, 42, 233, 0.8);
   --brand-muted: rgba(114, 42, 233, 0.15);
 
-  /* Backgrounds & Surfaces */
+  /* Dark Mode Backgounds & Surfaces (Sidebar / Login) */
   --bg-dark: #171717;
   --bg-surface: rgba(255, 255, 255, 0.04);
   --bg-surface-hover: rgba(255, 255, 255, 0.08);
-
-  /* Text & Typography */
   --text-light: #FFFFFF;
   --text-muted: rgba(255, 255, 255, 0.55);
-  
-  /* Borders & Dividers */
   --border-light: rgba(255, 255, 255, 0.08);
+
+  /* Light Mode Backgrounds & Surfaces (Features Content) */
+  --bg-light: #F9FAFB;
+  --bg-surface-light: #FFFFFF;
+  --bg-surface-light-hover: #F3F4F6;
+  --text-dark: #111827;
+  --text-muted-dark: #6B7280;
+  --border-dark: #E5E7EB;
+
+  /* Shared Properties */
   --border-focus: rgba(114, 42, 233, 0.5);
 
-  /* Status Colors (incorporating neutral/red as requested) */
+  /* Status Colors */
   --danger-pure: #E92A47;
   --danger-soft: rgba(233, 42, 71, 0.15);
   --danger-hover: rgba(233, 42, 71, 0.1);
@@ -64,6 +70,16 @@ button {
 
 input, select, textarea {
   font-family: inherit;
+}
+
+/* Lucide Angular Global Icon Fix */
+lucide-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+lucide-icon svg {
+  display: block;
 }
 
 /* 

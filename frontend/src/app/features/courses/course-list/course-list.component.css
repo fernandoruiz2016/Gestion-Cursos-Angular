@@ -12,14 +12,14 @@
 
 .page-header h1 {
   margin: 0 0 0.5rem 0;
-  color: var(--text-light);
+  color: var(--text-dark);
   font-size: 1.8rem;
   letter-spacing: -0.5px;
 }
 
 .page-header p {
   margin: 0;
-  color: var(--text-muted);
+  color: var(--text-muted-dark);
   font-size: 1rem;
 }
 
@@ -29,8 +29,8 @@
 }
 
 .card.table-card {
-  background-color: var(--bg-surface);
-  border: 1px solid var(--border-light);
+  background-color: var(--bg-surface-light);
+  border: 1px solid var(--border-dark);
   border-radius: var(--radius-lg);
   padding: 0;
   overflow: hidden;
@@ -51,16 +51,16 @@
   padding: 1rem 1.5rem;
   font-size: 0.85rem;
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: var(--text-muted-dark);
   font-weight: 600;
-  border-bottom: 1px solid var(--border-light);
-  background-color: rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid var(--border-dark);
+  background-color: rgba(0, 0, 0, 0.02);
 }
 
 .table td {
   padding: 1rem 1.5rem;
-  border-bottom: 1px solid var(--border-light);
-  color: var(--text-light);
+  border-bottom: 1px solid var(--border-dark);
+  color: var(--text-dark);
   font-size: 0.95rem;
   vertical-align: middle;
 }
@@ -70,11 +70,11 @@
 }
 
 .table tbody tr:hover {
-  background-color: var(--bg-surface-hover);
+  background-color: var(--bg-surface-light-hover);
 }
 
 .text-muted {
-  color: var(--text-muted);
+  color: var(--text-muted-dark);
 }
 
 .font-semi {
@@ -97,7 +97,7 @@
   height: 32px;
   border-radius: var(--radius-sm);
   transition: all 0.2s;
-  color: var(--text-muted);
+  color: var(--text-muted-dark);
 }
 
 .icon-sm {
@@ -130,13 +130,13 @@
 }
 
 .modal-content {
-  background-color: var(--bg-dark);
+  background-color: var(--bg-surface-light);
   padding: 2.5rem;
   border-radius: var(--radius-lg);
-  border: 1px solid var(--border-light);
+  border: 1px solid var(--border-dark);
   width: 100%;
   max-width: 500px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
 }
 
 .modal-header {
@@ -149,12 +149,26 @@
 .modal-header h2 {
   font-size: 1.5rem;
   margin: 0;
-  color: var(--text-light);
+  color: var(--text-dark);
 }
 
 .close-btn:hover {
-  background-color: var(--bg-surface);
-  color: var(--text-light);
+  background-color: var(--bg-surface-light-hover);
+  color: var(--text-dark);
+}
+
+.form-group label {
+  color: var(--text-muted-dark);
+}
+
+.form-control {
+  background-color: #fff;
+  border-color: var(--border-dark);
+  color: var(--text-dark);
+}
+
+.form-control:focus {
+  background-color: #fff;
 }
 
 .modal-actions {
@@ -167,7 +181,7 @@
 .empty-state {
   text-align: center;
   padding: 4rem;
-  color: var(--text-muted);
+  color: var(--text-muted-dark);
   font-size: 1rem;
 }
 
@@ -177,11 +191,11 @@
   align-items: center;
   justify-content: center;
   padding: 4rem;
-  color: var(--text-muted);
+  color: var(--text-muted-dark);
 }
 
 .spinner {
-  border: 3px solid rgba(255, 255, 255, 0.1);
+  border: 3px solid rgba(0, 0, 0, 0.1);
   width: 40px;
   height: 40px;
   border-radius: 50%;
