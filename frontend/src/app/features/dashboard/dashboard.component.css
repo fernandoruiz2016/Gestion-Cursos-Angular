@@ -108,10 +108,12 @@
 }
 
 .btn-logout .btn-icon {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-
 .btn-logout:hover {
   background-color: var(--danger-soft);
   color: var(--danger-pure);
