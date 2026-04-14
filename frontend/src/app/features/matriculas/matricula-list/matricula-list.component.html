@@ -1,0 +1,149 @@
+<div class="matricula-container animate-fade-in">
+  <div class="page-header">
+    <div>
+      <h1>Matrículas</h1>
+      <p>Asigne estudiantes a cursos y gestione vacantes.</p>
+    </div>
+  </div>
+
+  @if (loading) {
+    <div class="loader-container">
+      <div class="spinner"></div>
+      <p>Cargando información base...</p>
+    </div>
+  } @else {
+    @if (userRole === 'ESTUDIANTE') {
+        <div class="card full-width">
+           <h2>Mis Cursos Matriculados</h2>
+           @if (error) { <div class="alert alert-error">{{ error }}</div> }
+           @if (success) { <div class="alert alert-success">{{ success }}</div> }
+
+           <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Curso</th>
+                    <th>Estado de Matrícula</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (mat of matriculados; track mat.Id_Matricula) {
+                    <tr>
+                      <td><span class="font-semi">{{ mat.Nombre_Curso }}</span></td>
+                      <td><span class="badge success">Activa</span></td>
+                      <td>
+                        <button class="btn-danger-sm" (click)="desmatricular(mat.Id_Matricula)">Retirarse</button>
+                      </td>
+                    </tr>
+                  } @empty {
+                    <tr>
+                      <td colspan="3" class="empty-state border-none">Actualmente no te encuentras matriculado en ningún curso.</td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+        </div>
+    } @else {
+      <div class="grid-layout">
+        <!-- Panel de Control de Matrícula -->
+        <div class="control-panel card">
+        <h2>Nueva Matrícula</h2>
+        
+        <div class="form-group">
+          <label>Seleccionar Curso</label>
+          <select [(ngModel)]="selectedCourseId" (change)="onCourseSelect()" class="form-control">
+            <option [ngValue]="null">-- Seleccione un Curso --</option>
+            @for (course of courses; track course.Id_Curso) {
+              <option [ngValue]="course.Id_Curso">{{ course.Nombre }}</option>
+            }
+          </select>
+        </div>
+
+        @if (selectedCourse) {
+          <div class="stats-box">
+            <div class="stat">
+              <span class="label">Vacantes Totales:</span>
+              <span class="value">{{ selectedCourse.Vacantes }}</span>
+            </div>
+            <div class="stat">
+               <span class="label">Ocupadas:</span>
+               <span class="value">{{ selectedCourse.Matriculados || 0 }}</span>
+            </div>
+            <div class="stat highlight">
+               <span class="label">Disponibles:</span>
+               <span class="value" [class.danger]="vacantesDisponibles === 0">{{ vacantesDisponibles }}</span>
+            </div>
+          </div>
+
+          <div class="form-group mt-1">
+            <label>Seleccionar Estudiante</label>
+            <select [(ngModel)]="selectedEstudianteId" class="form-control" [disabled]="vacantesDisponibles <= 0">
+              <option [ngValue]="null">-- Seleccione un Estudiante --</option>
+              @for (est of estudiantes; track est.Id_Usuario) {
+                <option [ngValue]="est.Id_Usuario">{{ est.Nombre }} {{ est.Apellido }}</option>
+              }
+            </select>
+          </div>
+
+          <button class="btn-primary full-width" (click)="matricular()" [disabled]="!selectedEstudianteId || vacantesDisponibles <= 0">
+            Matricular Estudiante
+          </button>
+        }
+
+        @if (error) {
+          <div class="alert alert-error mt-1">{{ error }}</div>
+        }
+        @if (success) {
+          <div class="alert alert-success mt-1">{{ success }}</div>
+        }
+      </div>
+
+      <!-- Listado de estudiantes del curso -->
+      <div class="matriculados-panel card">
+        @if (!selectedCourse) {
+          <div class="empty-state">
+            <p>Seleccione un curso a la izquierda para ver los estudiantes matriculados.</p>
+          </div>
+        } @else {
+          <h2>Estudiantes en {{ selectedCourse.Nombre }}</h2>
+          
+          @if (loadingMatriculas) {
+            <div class="loader-container min-h">
+              <div class="spinner"></div>
+            </div>
+          } @else {
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (mat of matriculados; track mat.Id_Matricula) {
+                    <tr>
+                      <td>{{ mat.Nombre_Estudiante }} {{ mat.Apellido_Estudiante }}</td>
+                      <td>{{ mat.Email_Estudiante }}</td>
+                      <td>
+                        <button class="btn-danger-sm" (click)="desmatricular(mat.Id_Matricula)">Retirar</button>
+                      </td>
+                    </tr>
+                  } @empty {
+                    <tr>
+                      <td colspan="3" class="empty-state border-none">No hay estudiantes matriculados en este curso.</td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          }
+        }
+      </div>
+    </div>
+    }
+  }
+</div>

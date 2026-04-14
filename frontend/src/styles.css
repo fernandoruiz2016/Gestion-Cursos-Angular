@@ -1,43 +1,45 @@
 /* 
-  Global Design System
+  Global Design System - Academic / Flat
 */
 
 :root {
   /* Brand Colors */
-  --brand-primary: #722AE9;
-  --brand-hover: rgba(114, 42, 233, 0.8);
-  --brand-muted: rgba(114, 42, 233, 0.15);
+  --brand-primary: #0275d8;
+  --brand-hover: #025aa5;
+  --brand-muted: #e9ecef;
 
-  /* Dark Mode Backgounds & Surfaces (Sidebar / Login) */
-  --bg-dark: #171717;
-  --bg-surface: rgba(255, 255, 255, 0.04);
-  --bg-surface-hover: rgba(255, 255, 255, 0.08);
-  --text-light: #FFFFFF;
-  --text-muted: rgba(255, 255, 255, 0.55);
-  --border-light: rgba(255, 255, 255, 0.08);
+  /* Global Backgrounds */
+  --bg-dark: #343a40;       /* Used for Sidebars/Headers occasionally */
+  --bg-surface: #ffffff;    /* Main surface (white) */
+  --bg-surface-hover: #f8f9fa; /* Slight off-white hover */
+  
+  --bg-light: #f4f6f9;      /* App background */
+  --bg-surface-light: #ffffff;
+  --bg-surface-light-hover: #f8f9fa;
 
-  /* Light Mode Backgrounds & Surfaces (Features Content) */
-  --bg-light: #F9FAFB;
-  --bg-surface-light: #FFFFFF;
-  --bg-surface-light-hover: #F3F4F6;
-  --text-dark: #111827;
-  --text-muted-dark: #6B7280;
-  --border-dark: #E5E7EB;
-
-  /* Shared Properties */
-  --border-focus: rgba(114, 42, 233, 0.5);
+  /* Text & Typography */
+  --text-light: #ffffff;       /* Text on dark bg */
+  --text-muted: #adb5bd;       /* Muted text on dark bg */
+  
+  --text-dark: #212529;        /* Main dark text */
+  --text-muted-dark: #6c757d;  /* Muted dark text */
+  
+  /* Borders & Dividers */
+  --border-light: rgba(255, 255, 255, 0.1);
+  --border-dark: #dee2e6;
+  --border-focus: #80bdff;
 
   /* Status Colors */
-  --danger-pure: #E92A47;
-  --danger-soft: rgba(233, 42, 71, 0.15);
-  --danger-hover: rgba(233, 42, 71, 0.1);
-  --danger-border: rgba(233, 42, 71, 0.3);
+  --danger-pure: #dc3545;
+  --danger-soft: #f8d7da;
+  --danger-hover: #c82333;
+  --danger-border: #f5c6cb;
 
-  /* Sizes & radii */
-  --radius-sm: 6px;
-  --radius-primary: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
+  /* Sizes & radii - Reduced for traditional look */
+  --radius-sm: 2px;
+  --radius-primary: 4px;
+  --radius-lg: 4px;
+  --radius-xl: 4px;
 }
 
 /* Base Reset */
@@ -48,12 +50,11 @@
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  background-color: var(--bg-dark);
-  color: var(--text-light);
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  background-color: var(--bg-light);
+  color: var(--text-dark);
   line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: auto;
 }
 
 a {
@@ -87,13 +88,12 @@ lucide-icon svg {
 */
 .btn-primary {
   background-color: var(--brand-primary);
-  color: #fff;
-  border: 1px solid transparent;
-  padding: 10px 20px;
+  color: #ffffff;
+  border: 1px solid var(--brand-primary);
+  padding: 8px 16px;
   border-radius: var(--radius-primary);
   font-size: 0.9rem;
-  font-weight: 500;
-  transition: all 0.2s ease;
+  font-weight: normal;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -102,24 +102,23 @@ lucide-icon svg {
 
 .btn-primary:hover:not(:disabled) {
   background-color: var(--brand-hover);
-  box-shadow: 0 0 12px var(--brand-muted);
+  border-color: var(--brand-hover);
 }
 
 .btn-primary:disabled {
-  opacity: 0.5;
+  opacity: 0.65;
   cursor: not-allowed;
 }
 
 /* Ghost / Secondary buttons */
 .btn-secondary {
   background-color: transparent;
-  color: var(--text-light);
-  border: 1px solid var(--border-light);
-  padding: 10px 20px;
+  color: var(--text-dark);
+  border: 1px solid var(--border-dark);
+  padding: 8px 16px;
   border-radius: var(--radius-primary);
   font-size: 0.9rem;
-  font-weight: 500;
-  transition: all 0.2s ease;
+  font-weight: normal;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -127,19 +126,18 @@ lucide-icon svg {
 }
 
 .btn-secondary:hover:not(:disabled) {
-  background-color: var(--bg-surface);
-  border-color: rgba(255, 255, 255, 0.2);
+  background-color: var(--bg-surface-hover);
+  border-color: #c8cbcf;
 }
 
 .btn-danger {
-  background-color: var(--danger-soft);
-  color: var(--danger-pure);
-  border: 1px solid transparent;
-  padding: 8px 16px;
+  background-color: var(--danger-pure);
+  color: #fff;
+  border: 1px solid var(--danger-pure);
+  padding: 6px 12px;
   border-radius: var(--radius-primary);
   font-size: 0.85rem;
-  font-weight: 500;
-  transition: all 0.2s ease;
+  font-weight: normal;
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -147,57 +145,50 @@ lucide-icon svg {
 
 .btn-danger:hover {
   background-color: var(--danger-hover);
-  border-color: var(--danger-border);
+  border-color: var(--danger-hover);
 }
 
 /* Form Groups */
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   display: flex;
   flex-direction: column;
 }
 
 .form-group label {
   font-size: 0.85rem;
-  color: var(--text-muted);
-  margin-bottom: 8px;
-  font-weight: 500;
+  color: var(--text-dark);
+  margin-bottom: 5px;
+  font-weight: bold;
 }
 
 .form-control {
   width: 100%;
-  background-color: var(--bg-surface);
-  border: 1px solid var(--border-light);
-  color: var(--text-light);
-  padding: 12px 16px;
+  background-color: #ffffff;
+  border: 1px solid #ced4da;
+  color: #495057;
+  padding: 8px 12px;
   border-radius: var(--radius-primary);
   outline: none;
-  font-size: 0.95rem;
-  transition: all 0.2s ease;
+  font-size: 0.9rem;
 }
 
 .form-control:focus {
-  border-color: var(--brand-primary);
-  box-shadow: 0 0 0 3px var(--brand-muted);
+  border-color: var(--border-focus);
 }
 
 .form-control::placeholder {
-  color: var(--text-muted);
+  color: #6c757d;
 }
 
 .error-text {
   color: var(--danger-pure);
   font-size: 0.8rem;
-  margin-top: 6px;
+  margin-top: 4px;
   display: block;
 }
 
-/* Animations */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
+/* Removed Animations for a stable, traditional feel */
 .animate-fade-in {
-  animation: fadeIn 0.4s ease-out forwards;
+  /* Disabled intentionally */
 }

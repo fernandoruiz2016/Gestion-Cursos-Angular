@@ -3,4 +3,6 @@ export interface Course {
   Nombre: string;
   Descripcion: string;
   Id_Profesor: number;
+  Vacantes?: number;
+  Matriculados?: number;
 }

@@ -25,12 +25,13 @@ async function createController(req, res) {
     const nombre = req.body.Nombre || req.body.nombre;
     const descripcion = req.body.Descripcion || req.body.descripcion;
     const id_profesor = req.body.Id_Profesor || req.body.id_profesor;
+    const vacantes = req.body.Vacantes !== undefined ? req.body.Vacantes : 30;
 
     if (!nombre) {
       return res.status(400).json({ message: "El nombre del curso es obligatorio" });
     }
 
-    const nuevoCurso = await crearCurso(nombre, descripcion, id_profesor);
+    const nuevoCurso = await crearCurso(nombre, descripcion, id_profesor, vacantes);
     res.status(201).json(nuevoCurso);
   } catch (error) {
     console.error("Error creating course:", error);
@@ -44,8 +45,9 @@ async function updateController(req, res) {
     const nombre = req.body.Nombre || req.body.nombre;
     const descripcion = req.body.Descripcion || req.body.descripcion;
     const id_profesor = req.body.Id_Profesor || req.body.id_profesor;
+    const vacantes = req.body.Vacantes !== undefined ? req.body.Vacantes : 30;
 
-    const cursoActualizado = await editarCurso(id, nombre, descripcion, id_profesor);
+    const cursoActualizado = await editarCurso(id, nombre, descripcion, id_profesor, vacantes);
     res.status(200).json(cursoActualizado);
   } catch (error) {
     console.error("Error updating course:", error);

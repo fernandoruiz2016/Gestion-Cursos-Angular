@@ -14,7 +14,15 @@ CREATE TABLE IF NOT EXISTS Curso (
     Id_Curso SERIAL PRIMARY KEY,
     Nombre VARCHAR(100) NOT NULL,
     Descripcion TEXT,
-    Id_Profesor INTEGER REFERENCES Usuario(Id_Usuario) ON DELETE SET NULL
+    Id_Profesor INTEGER REFERENCES Usuario(Id_Usuario) ON DELETE SET NULL,
+    Vacantes INTEGER DEFAULT 30
+);
+
+CREATE TABLE IF NOT EXISTS Matricula (
+    Id_Matricula SERIAL PRIMARY KEY,
+    Id_Curso INTEGER REFERENCES Curso(Id_Curso) ON DELETE CASCADE,
+    Id_Estudiante INTEGER REFERENCES Usuario(Id_Usuario) ON DELETE CASCADE,
+    UNIQUE(Id_Curso, Id_Estudiante)
 );
 
 -- Usuario inicial (admin)

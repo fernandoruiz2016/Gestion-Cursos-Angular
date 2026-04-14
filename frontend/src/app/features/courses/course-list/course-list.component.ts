@@ -34,7 +34,8 @@ export class CourseListComponent implements OnInit {
   courseForm: FormGroup = this.fb.group({
     Nombre: ['', [Validators.required]],
     Descripcion: [''],
-    Id_Profesor: [null, [Validators.required]]
+    Id_Profesor: [null, [Validators.required]],
+    Vacantes: [30, [Validators.required, Validators.min(1)]]
   });
 
   ngOnInit() {
@@ -70,7 +71,7 @@ export class CourseListComponent implements OnInit {
 
   openCreate() {
     this.editingCourse = null;
-    this.courseForm.reset({ Id_Profesor: this.professors[0]?.Id_Usuario || null });
+    this.courseForm.reset({ Id_Profesor: this.professors[0]?.Id_Usuario || null, Vacantes: 30 });
     this.showModal = true;
   }
 

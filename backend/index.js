@@ -7,6 +7,7 @@ const crearTablas = require("./database/crearTablas");
 const usuariosApi = require("./apis/usuarios");
 const cursosApi = require("./apis/cursos");
 const authApi = require("./apis/auth");
+const matriculasApi = require("./apis/matriculas");
 
 
 const app = express();
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use("/api/usuarios", usuariosApi);
 app.use("/api/cursos", cursosApi);
 app.use("/api/auth", authApi);
+app.use("/api/matriculas", matriculasApi);
 
 const port = process.env.SERVER_PORT;
 

@@ -8,12 +8,12 @@ async function buscarCursoPorId(id) {
   return await obtenerPorId(id);
 }
 
-async function crearCurso(nombre, descripcion, id_profesor) {
-  return await crear(nombre, descripcion, id_profesor);
+async function crearCurso(nombre, descripcion, id_profesor, vacantes) {
+  return await crear(nombre, descripcion, id_profesor, vacantes);
 }
 
-async function editarCurso(id, nombre, descripcion, id_profesor) {
-  return await actualizar(id, nombre, descripcion, id_profesor);
+async function editarCurso(id, nombre, descripcion, id_profesor, vacantes) {
+  return await actualizar(id, nombre, descripcion, id_profesor, vacantes);
 }
 
 async function removerCurso(id) {

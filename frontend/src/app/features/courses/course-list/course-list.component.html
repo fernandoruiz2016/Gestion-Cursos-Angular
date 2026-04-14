@@ -24,6 +24,8 @@
             <th>Nombre</th>
             <th>Descripción</th>
             <th>Profesor</th>
+            <th>Vacantes</th>
+            <th>Ocupadas</th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -33,6 +35,8 @@
               <td><span class="font-semi">{{ course.Nombre }}</span></td>
               <td><span class="text-muted">{{ course.Descripcion || 'Sin descripción' }}</span></td>
               <td>{{ getProfessorName(course.Id_Profesor) }}</td>
+              <td>{{ course.Vacantes }}</td>
+              <td>{{ course.Matriculados || 0 }} / {{ course.Vacantes }}</td>
               <td>
                 <div class="action-buttons">
                   <button class="btn-icon edit" (click)="openEdit(course)" title="Editar">
@@ -77,15 +81,24 @@
             <label>Descripción</label>
             <textarea formControlName="Descripcion" rows="3" class="form-control" placeholder="Acerca del curso..."></textarea>
           </div>
-          <div class="form-group">
-            <label>Profesor Asignado</label>
-            <select formControlName="Id_Profesor" class="form-control">
-              @for (prof of professors; track prof.Id_Usuario) {
-                <option [value]="prof.Id_Usuario">
-                  {{ prof.Nombre }} {{ prof.Apellido }} ({{ prof.Rol | roleName }})
-                </option>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Profesor Asignado</label>
+              <select formControlName="Id_Profesor" class="form-control">
+                @for (prof of professors; track prof.Id_Usuario) {
+                  <option [value]="prof.Id_Usuario">
+                    {{ prof.Nombre }} {{ prof.Apellido }} ({{ prof.Rol | roleName }})
+                  </option>
+                }
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Cupo / Vacantes</label>
+              <input type="number" formControlName="Vacantes" min="1" class="form-control">
+              @if (courseForm.get('Vacantes')?.touched && courseForm.get('Vacantes')?.invalid) {
+                <small class="error-text">Inválido</small>
               }
-            </select>
+            </div>
           </div>
           <div class="modal-actions">
             <button type="button" class="btn-secondary" (click)="closeModal()">Cancelar</button>

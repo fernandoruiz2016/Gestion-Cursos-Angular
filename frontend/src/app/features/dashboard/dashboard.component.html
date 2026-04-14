@@ -16,6 +16,10 @@
         <lucide-icon [img]="BookIcon" class="nav-icon"></lucide-icon>
         Cursos
       </a>
+      <a *appHasRole="[roles.ADMIN, roles.PROFESOR, roles.ESTUDIANTE]" routerLink="/dashboard/matriculas" routerLinkActive="active" class="nav-item">
+        <lucide-icon [img]="EnrollIcon" class="nav-icon"></lucide-icon>
+        Matrículas
+      </a>
     </nav>
     <div class="sidebar-footer">
       @if (user) {

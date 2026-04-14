@@ -29,6 +29,12 @@ export const routes: Routes = [
         canActivate: [roleGuard],
         data: { roles: [UserRole.ADMIN, UserRole.PROFESOR] }
       },
+      {
+        path: 'matriculas',
+        loadComponent: () => import('./features/matriculas/matricula-list/matricula-list.component').then(m => m.MatriculaListComponent),
+        canActivate: [roleGuard],
+        data: { roles: [UserRole.ADMIN, UserRole.PROFESOR, UserRole.ESTUDIANTE] }
+      },
       { path: '', redirectTo: 'home', pathMatch: 'full' }
     ]
   },
