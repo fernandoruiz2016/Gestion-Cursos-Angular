@@ -29,10 +29,10 @@ El sistema maneja un control estricto de accesos limitados según rol (`enum` de
    - Acceso total. Puede crear, listar, modificar y eliminar tanto usuarios (otros recursos) como cursos en el sistema.
 
 2. **Profesor (`PROFESOR`):**
-   - Acceso parcial. Puede acceder a los Dashboard y ver exclusivamente el listado y paneles de Cursos de la institución. No tiene permitido ver o gestionar otros usuarios.
+   - Acceso parcial. Puede acceder a los Dashboard y modificar los cursos a los que está asignado. No tiene permitido ver o gestionar otros usuarios ni cursos de otros profesores.
 
 3. **Estudiante (`ESTUDIANTE`):**
-   - Acceso restringido. Visualiza solamente métricas de su panel en el dashboard.
+   - Acceso restringido. Visualiza solamente métricas de su panel en el dashboard y cursos matriculados.
 
 ---
 
