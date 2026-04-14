@@ -71,7 +71,12 @@ export class MatriculaListComponent implements OnInit {
   loadInitialData() {
     this.loading = true;
     this.courseService.getAll().subscribe(courses => {
-      this.courses = courses;
+      if (this.userRole === UserRole.PROFESOR) {
+        this.courses = courses.filter(c => c.Id_Profesor === this.currentUserId);
+      } else {
+        this.courses = courses;
+      }
+
       this.userService.getAll().subscribe(users => {
         this.estudiantes = users.filter(u => u.Rol === UserRole.ESTUDIANTE);
         this.loading = false;

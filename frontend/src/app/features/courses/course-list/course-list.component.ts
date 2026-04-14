@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { CourseService } from '../../../core/services/course.service';
 import { UserService } from '../../../core/services/user.service';
+import { AuthService } from '../../../core/services/auth.service';
 import { Course } from '../../../core/models/course.model';
 import { User, UserRole } from '../../../core/models/user.model';
 import { RolePipe } from '../../../core/pipes/role.pipe';
@@ -22,6 +23,7 @@ export class CourseListComponent implements OnInit {
   readonly CloseIcon = X;
   private courseService = inject(CourseService);
   private userService = inject(UserService);
+  private authService = inject(AuthService);
   private fb = inject(FormBuilder);
   private cdr = inject(ChangeDetectorRef);
 
@@ -30,6 +32,8 @@ export class CourseListComponent implements OnInit {
   showModal = false;
   editingCourse: Course | null = null;
   loading = true;
+  userRole: UserRole | undefined;
+  currentUserId: number | undefined;
 
   courseForm: FormGroup = this.fb.group({
     Nombre: ['', [Validators.required]],
@@ -39,8 +43,20 @@ export class CourseListComponent implements OnInit {
   });
 
   ngOnInit() {
+    const user = this.authService.getUser();
+    if (user) {
+      this.userRole = user.Rol as UserRole;
+      this.currentUserId = user.Id_Usuario;
+    }
+
     this.loadCourses();
     this.loadProfessors();
+  }
+
+  canModifyCourse(course: Course): boolean {
+    if (this.userRole === UserRole.ADMIN) return true;
+    if (this.userRole === UserRole.PROFESOR && this.currentUserId === course.Id_Profesor) return true;
+    return false;
   }
 
   loadCourses() {

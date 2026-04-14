@@ -4,10 +4,12 @@
       <h1>Gestión de Cursos</h1>
       <p>Administre el catálogo de cursos y asigne profesores.</p>
     </div>
-    <button class="btn-primary" (click)="openCreate()">
-      <lucide-icon [img]="PlusIcon" class="btn-icon-inside"></lucide-icon>
-      Nuevo Curso
-    </button>
+    @if (userRole === 'ADMIN') {
+      <button class="btn-primary" (click)="openCreate()">
+        <lucide-icon [img]="PlusIcon" class="btn-icon-inside"></lucide-icon>
+        Nuevo Curso
+      </button>
+    }
   </div>
 
   <div class="card table-card">
@@ -39,12 +41,16 @@
               <td>{{ course.Matriculados || 0 }} / {{ course.Vacantes }}</td>
               <td>
                 <div class="action-buttons">
-                  <button class="btn-icon edit" (click)="openEdit(course)" title="Editar">
-                    <lucide-icon [img]="EditIcon" class="icon-sm"></lucide-icon>
-                  </button>
-                  <button class="btn-icon delete" (click)="deleteCourse(course.Id_Curso)" title="Eliminar">
-                    <lucide-icon [img]="DeleteIcon" class="icon-sm"></lucide-icon>
-                  </button>
+                  @if (canModifyCourse(course)) {
+                    <button class="btn-icon edit" (click)="openEdit(course)" title="Editar">
+                      <lucide-icon [img]="EditIcon" class="icon-sm"></lucide-icon>
+                    </button>
+                    <button class="btn-icon delete" (click)="deleteCourse(course.Id_Curso)" title="Eliminar">
+                      <lucide-icon [img]="DeleteIcon" class="icon-sm"></lucide-icon>
+                    </button>
+                  } @else {
+                     <span class="text-muted" style="font-size: 0.8rem">Solo lectura</span>
+                  }
                 </div>
               </td>
             </tr>
